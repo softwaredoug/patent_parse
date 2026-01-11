@@ -4,6 +4,8 @@
 
 This library is designed to parse abstracts from patent PDFs, specifically those downloaded from Google Scholar. The goal is to accurately extract the abstract section from various patent PDF formats.
 
+**Critical Requirement:** The parser must keep whole words together. PDFs sometimes split words across line breaks (e.g., "effi ciency" or "main tains"), and the parser must reconstruct these into complete words ("efficiency", "maintains"). This is essential for producing readable, usable abstracts.
+
 ## Development Workflow
 
 The typical workflow for improving the parser follows a test-driven approach:
