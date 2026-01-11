@@ -14,6 +14,3 @@ wheels/
 
 # Claude Code
 .claude/
-
-# Test assets (PDFs can be re-downloaded)
-tests/assets/*.pdf

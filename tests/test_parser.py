@@ -106,6 +106,5 @@ def test_extract_abstract_from_patents(test_case):
     abstract = extract_abstract(pdf_path)
 
     assert abstract is not None, f"Abstract should be extracted from {test_case['patent_id']}"
-    import pdb; pdb.set_trace()
     assert abstracts_match(expected_abstract, abstract), \
         f"Expected abstract not found in {test_case['patent_id']}.\n\nExpected:\n{expected_abstract}\n\nGot:\n{abstract}"
