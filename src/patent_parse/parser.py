@@ -61,11 +61,33 @@ def extract_abstract(pdf_path: str) -> str | None:
     # Split into lines and collect abstract text
     lines = remaining_text.split('\n')
     abstract_lines = []
+    seen_continued = False  # Track if we've seen (Continued) marker
 
     for line in lines:
         line = line.strip()
         if not line:
             continue
+
+        # Check for (Continued) marker - after this, skip to next page
+        if re.search(r'\(\s*Continued\s*\)', line, re.IGNORECASE):
+            seen_continued = True
+            # Add the line up to (Continued), then skip remaining lines on this page
+            line = re.sub(r'\(\s*Continued\s*\).*', '', line, flags=re.IGNORECASE).strip()
+            if line:
+                abstract_lines.append(line)
+            continue
+
+        # If we've seen (Continued), skip lines until we hit a page marker or proper continuation
+        if seen_continued:
+            # Check if this looks like start of continuation (starts with lowercase or is substantial text)
+            if re.match(r'^[a-z]', line) and len(line) > 30:
+                seen_continued = False  # Resume collecting
+            elif re.match(r'^Page\s+\d+', line, re.IGNORECASE):
+                seen_continued = False  # New page, resume
+                continue
+            else:
+                # Skip this line (likely diagram text or other noise)
+                continue
 
         # Stop at section headers or reference markers
         if re.match(r'^(\d+\s+)?Claims?\s*,', line, re.IGNORECASE):
@@ -75,6 +97,9 @@ def extract_abstract(pdf_path: str) -> str | None:
         if re.match(r'^References Cited', line, re.IGNORECASE):
             break
         if re.match(r'^\(\s*\d+\s*\)', line):  # Patent classification codes like (51), (52)
+            break
+        # Stop at "X Claims, Y Drawing Sheets" marker
+        if re.search(r'\d+\s+Claims?\s*,\s*\d+\s+Drawing\s+Sheets?', line, re.IGNORECASE):
             break
 
         # Skip obvious non-abstract content
@@ -100,6 +125,27 @@ def extract_abstract(pdf_path: str) -> str | None:
             continue
         # Common noise words from citations/references
         if line in ['Cited', 'CITED', 'OCUMENTS', 'DOCUMENTS', 'ed', 'ued']:
+            continue
+        # Skip lines that look like author names (e.g., "Smith et al.", "Jones, Jr.")
+        if re.search(r'\bet\s+al\.?\b', line, re.IGNORECASE):
+            continue
+        if re.search(r',\s+(Jr\.?|Sr\.?)\s*$', line, re.IGNORECASE):
+            continue
+        # Skip lines that are mostly lowercase fragments (likely split author names)
+        if len(line) < 20 and line.islower():
+            continue
+        # Skip lines with strange patterns like "coni'i'." or standalone numbers
+        if re.match(r'^[a-z]{2,8}\'[a-z]\'\.\"?\s*\d+', line):
+            continue
+        # Skip diagram-like text: single capitalized words or very short capitalized phrases
+        if len(line) < 25 and re.match(r'^[A-Z][a-z]+$', line):  # Single capitalized word
+            continue
+        if len(line) < 20 and line.count(' ') <= 2 and re.match(r'^[A-Z]', line):  # Very short phrases
+            # But allow if it seems like part of abstract (has lowercase continuation)
+            if not re.search(r'[a-z]{3,}.*[a-z]{3,}', line):
+                continue
+        # Skip lines that look like diagram labels (multiple question marks or special chars)
+        if line.count('?') > 2 or line.count('???') > 0:
             continue
 
         abstract_lines.append(line)

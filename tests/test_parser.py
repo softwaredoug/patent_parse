@@ -90,6 +90,34 @@ PATENT_TEST_CASES = [
             "electric vehicle, without performing fast charging and normal charging at the same time."
         ),
     },
+    {
+        "patent_id": "US9277756",
+        "pdf_path": "tests/assets/US9277756.pdf",
+        "expected_abstract": (
+            "Methods for preparing cheese are provided that involve combining a slurry with a cheese "
+            "precursor to form an admixture that is subsequently processed to form the cheese product. "
+            "The slurry typically includes a liquid such as water, milk and/or cream and one or more "
+            "ingredients that are useful for inclusion in the final cheese product. Systems for preparing "
+            "such slurries and cheese products are also provided."
+        ),
+    },
+    {
+        "patent_id": "US11029680",
+        "pdf_path": "tests/assets/US11029680.pdf",
+        "expected_abstract": (
+            "Methods and systems for a monitoring system for data collection in an industrial environment "
+            "including a data collector communicatively coupled to a plurality of input channels connected "
+            "to data collection points operatively coupled to at least one of an oil production component "
+            "or gas production component; a data storage structured to store a plurality of diagnostic "
+            "frequency band ranges for the at least one of an oil production component or gas production "
+            "component; a data acquisition circuit structured to interpret a plurality of detection values "
+            "from the plurality of input channels, and a data analysis circuit structured to analyze the "
+            "plurality of detection values to determine measured frequency band data and compare the "
+            "measured frequency band data to the plurality of diagnostic frequency band ranges, and to "
+            "diagnose an operational parameter of the least one of an oil production component or gas "
+            "production component in response to the comparison."
+        ),
+    },
 ]
 
 
