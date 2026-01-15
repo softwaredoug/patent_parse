@@ -3,6 +3,7 @@
 import re
 import pytest
 from patent_parse import extract_abstract
+from patent_test import evaluate
 
 
 def normalize_text(text):
@@ -136,3 +137,13 @@ def test_extract_abstract_from_patents(test_case):
     assert abstract is not None, f"Abstract should be extracted from {test_case['patent_id']}"
     assert abstracts_match(expected_abstract, abstract), \
         f"Expected abstract not found in {test_case['patent_id']}.\n\nExpected:\n{expected_abstract}\n\nGot:\n{abstract}"
+
+
+def test_evaluate_heldout():
+    """Test parser accuracy against held-out patent test set."""
+    def safe_extract(pdf_path):
+        result = extract_abstract(pdf_path)
+        return result if result else ''
+
+    score = evaluate(safe_extract)
+    assert score >= 0.5, f"Expected accuracy >= 0.5, got {score}"

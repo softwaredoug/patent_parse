@@ -1,0 +1,20 @@
+[project]
+name = "patent-test"
+version = "0.1.0"
+description = "A heldout test set for evaluating patent PDF parsing"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pypdf>=6.6.0",
+    "pyyaml>=6.0.3",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+patent_test = ["tests.yml", "assets/*.pdf"]

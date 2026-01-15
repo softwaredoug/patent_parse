@@ -1,0 +1,14 @@
+README.md
+pyproject.toml
+src/patent_test/__init__.py
+src/patent_test/evaluator.py
+src/patent_test/tests.yml
+src/patent_test.egg-info/PKG-INFO
+src/patent_test.egg-info/SOURCES.txt
+src/patent_test.egg-info/dependency_links.txt
+src/patent_test.egg-info/requires.txt
+src/patent_test.egg-info/top_level.txt
+src/patent_test/assets/US11763522.pdf
+src/patent_test/assets/US12074548.pdf
+src/patent_test/assets/US12321592B2.pdf
+src/patent_test/assets/US20180279539A1.pdf

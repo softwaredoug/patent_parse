@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv add:*)",
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(source .venv/bin/activate)",
+      "Bash(python:*)"
+    ]
+  }
+}
