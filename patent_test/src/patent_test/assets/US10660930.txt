@@ -1,0 +1,311 @@
+US010660930B2
+
+(12 ) Calabotta
+United etStates
+Patent
+al.
+
+( 10 ) Patent No.: US 10,660,930 B2
+(45 ) Date of Patent:
+*May 26 , 2020
+
+(54 ) COMBINATION AND /OR COMPRISING
+
+(52) U.S. CI.
+CPC
+A61K 36/88 ( 2013.01); A23K 10/18
+(2016.05 ); A23K 10/30 ( 2016.05 ); A23K 20/00
+
+BACILLUS , AND YUCCA, QUILLAJA , OR
+BOTH AND A METHOD FOR USING AND
+
+( 2016.05 ); A23K 20/10 (2016.05 ); A23K 50/10
+( 2016.05); A23K 50/30 (2016.05 ); A23K 50/40
+(2016.05); A23K 50/75 (2016.05 ); A23K 50/80
+
+MAKING
+
+(71) Applicants : Phibro Animal Health Corporation ,
+Teaneck , NJ (US ); Desert King
+
+(2016.05 ) ; A23L 33/105 ( 2016.08); A23L
+33/135 (2016.08 ); A6IK 35/742 ( 2013.01) ;
+A61K 36/185 (2013.01 ); A61K 2035/115
+
+International, LLC , San Diego , CA
+
+(US )
+( 72 ) Inventors: David Calabotta , Quincy , IL (US );
+Wendell Knehans, St. Louis , MO (US ) ;
+Derek McLean , Corvallis, OR (US )
+
+( 73) Assignees: Phibro Animal Health Corporation ,
+Teaneck , NJ (US ); Desert King
+International LLC , San Diego , CA
+
+( 2013.01)
+
+(58 ) Field of Classification Search
+None
+
+See application file for complete search history .
+
+(56 )
+
+U.S. PATENT DOCUMENTS
+
+(US )
+
+( * ) Notice:
+
+Subject to any disclaimer , the term of this
+patent is extended or adjusted under 35
+U.S.C. 154 (b ) by 0 days.
+This patent is subject to a terminal dis
+claimer .
+
+(65 )
+
+6,485,734 B1 11/2002 Baker et al .
+9,999,648 B2 * 6/2018 Calabotta
+2011/0256216 Al
+
+Prior Publication Data
+US 2018/0256667 A1 Sep. 13 , 2018
+
+A61K 35/742
+
+10/2011 Lefkowitz
+
+FOREIGN PATENT DOCUMENTS
+CN
+JP
+
+( 21) Appl. No.: 15 /977,055
+(22) Filed : May 11 , 2018
+
+References Cited
+
+JP
+JP
+JP
+
+JP
+
+KR
+WO
+WO
+
+103289910
+07-107923
+08-099884
+08-131089
+2002-370993
+
+2006-061092
+
+2012-0069221
+WO 93/14187
+WO 94/11492
+
+9/2013
+4/1995
+4/1996
+5/1996
+12/2002
+
+3/2006
+
+6/2012
+7/1993
+5/1994
+
+(Continued )
+OTHER PUBLICATIONS
+
+Related U.S. Application Data
+
+(63 ) Continuation of application No. 14 /699,740, filed on
+Apr. 29 , 2015 , now Pat . No. 9,999,648, which is a
+
+application
+No.
+of
+continuation
+PCT/US2014 /062283 , filed on Oct. 24 , 2014 .
+
+(60 ) Provisional application No.61/895,980 , filed on Oct.
+25, 2013 .
+
+(51) Int. Ci.
+A61K 36/38
+A23K 1/00
+A23K 1/16
+
+A61K 36/185
+A61K 36/88
+A23L 33/105
+A23L 33/135
+A23K 10/18
+
+( 2006.01 )
+( 2006.01 )
+( 2006.01)
+( 2006.01 )
+( 2006.01 )
+( 2016.01)
+( 2016.01)
+
+(2016.01)
+
+A23K 50/10
+
+(2016.01)
+(2016.01)
+(2016.01)
+(2016.01)
+( 2016.01)
+
+A23K 50/80
+A61K 35/742
+A61K 35/00
+
+(Continued )
+Primary Examiner Padmavathi Baskar
+
+(74 ) Attorney, Agent, or Firm - Klarquist Sparkman ,
+
+( 2016.01 )
+(2016.01)
+(2016.01)
+
+A23K 50/30
+A23K 50/40
+
+tarda in Combination with OralAdministration of Immunostimulants,"
+Fisheries Science 65 (4 ):527-530 , Aug. 1, 1999.
+
+LLP
+
+A23K 10/30
+A23K 20/00
+A23K 20/10
+
+A23K 50/75
+
+Ashida et al.,“ Protection of Japanese Flounder Paralichthys olivaceus
+
+against Experimental Edwardsiellosis by Formalin -killed Edwardsiella
+
+( 2015.01 )
+
+( 2006.01)
+
+ABSTRACT
+(57)
+The present disclosure concerns embodiments of a combi
+
+nation and /or composition comprising bacillus, and yucca ,
+quillaja or both . Embodiments of methods of making and
+using the combination and /or composition also are disclosed
+herein . In some embodiments, the combination and / or com
+position may be used to improve feed conversion rates in
+
+animals. In some embodiments the animals are avians; in
+other embodiments , the animals are non -avians. Embodi
+ments of the disclosed combination can comprise first
+
+composition comprising Quillaja saponaria, Yucca schidi
+gera , or both , and Bacillus coagulans. Embodiments of the
+disclosed composition can comprise Quillaja saponaria ,
+Yucca schidigera , or both , and Bacillus coagulans.
+13 Claims, 34 Drawing Sheets
+
+US 10,660,930 B2
+Page 2
+
+References Cited
+
+x O. niloticus,” Journalof the World Aquaculture Society 34 ( 2):156
+
+FOREIGN PATENT DOCUMENTS
+
+Kensil et al, “ Saponins as vaccine adjuvants,” Critical Reviews in
+Therapeutic Drug Carrier Systems 13 ( 1/02): 1-55 , Jan. 1, 1996
+(Abstract only ).
+Marais et al., “ Control of Plant-Parasitic Nematodes with Bionematicides
+Nema-Q® An Extract of Quillaja Saponaria ,” Journal of Nematol
+ogy 42 ( 3 ):254-255 , Sep. 1, 2010 .
+Olusola et al., “ The potentials of medicinal plant extracts as
+bio -antimicrobials in aquaculture,” International Journal of Medici
+nal and Aromatic Plants, 3 ( 3 ):404-412 , Sep. 1, 2013 .
+
+( 56 )
+WO
+WO
+
+WO 2005/092122
+WO 2015/155293
+
+6/2005
+10/2015
+
+OTHER PUBLICATIONS
+Calabotta et al., “Metabolism and Nutrition : Feed Additives II- 175
+
+Impact of a proprietary blend (PB ) of Quillaja saponaria and Yucca
+idigera and commercially available direct fed microbials (DFM )
+
+on performance of commercial broilers,” Poultry Science 92( E
+Suppl. 1): 59-62, Jul. 24 , 2013
+
+Francis et al., “ Quillaja saponins a natural growth promoter for
+fish ,” Animal Feed Science and Technology 121( 1-2): 147-157 , Jun .
+9 , 2005 .
+Güroy et al., “ Effect of dietary Yucca schidigera extract on growth ,
+
+total ammonia -nitrogen excretion and haematological parameters of
+juvenile striped catfish Pangasianodon hypophthalmus,” Aquacul
+
+161, Jun . 2003.
+
+“ Product Showcase : Direct-fed Microbe," Poultry Times pp . 14-15 ,
+Oct. 21, 2013 .
+
+Stewart - Tull, “ The Use of Adjuvants in Experimental Vaccines: IV .
+ISCOMS.,” Methods in Molecular Medicine 4 : 153-155 , 1996 .
+“ Stop Stool Eating Chewable Tablets for Dogs,” http ://www.drugs.
+
+com /vet/shop/stop -stool-eating-chewable -tablets -for-dogs.htmldown
+
+loaded Oct. 21, 2014 .
+
+Vinay et al., “ Toxicity and dose determination of quillaja saponin ,
+
+aluminum hydroxide and squalene in olive flounder (Paralichthys
+olivaceus),” Veterinary Immunology and Immunopathology 158 ( 1):73
+85 , Mar. 22 , 2013 .
+
+Irianto et al., “ Probiotics in aquaculture,” Journal of Fish Diseases
+
+Wang et al., “ Anthelmintic activity of steroidal saponins from C.H.
+Wright against (Monogenea ) in goldfish ,” Parasitology Research
+107 (6 ): 1365-1371, Aug. 6 , 2010 .
+Written Opinion dated May 20 , 2015 from PCT Application No.
+
+Kelly et al., “ Effects of Yucca shidigera Extract on Growth , Nitro
+gen Retention , Ammonia Excretion , and Toxicity in Channel Catfish
+Ictalurus punctatus and Hybrid Tilapia Oreochromis mossambicus
+
+* cited by examiner
+
+ture Research 45 (4 ):647-654 , Mar. 2014 .
+International Search Report dated Jan. 30 , 2015 from International
+
+Application No. PCT/US2014 /062283 .
+25 : 1-10 , Jan. 2002.
+
+PCT/EP2015 /057732 (International Publication No. WO 2015 /
+155293 ).
+
+

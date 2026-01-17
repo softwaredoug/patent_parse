@@ -42,7 +42,12 @@ To keep test assets small, always truncate patent PDFs to their first two pages:
    ```bash
    python truncate_pdf.py downloaded.pdf src/patent_test/assets/PATENT_ID.pdf
    ```
-3. Add the test case to `src/patent_test/tests.yml` with the correct abstract text
+3. Verify the PDF is text-based (not a scanned image):
+   ```bash
+   pdftotext src/patent_test/assets/PATENT_ID.pdf -
+   ```
+   If no text output is produced, **reject the patent** and delete the PDF. Only text-based patents are accepted.
+4. Add the test case to `src/patent_test/tests.yml` with the correct abstract text
 
 The `truncate_pdf.py` script extracts the first 2 pages and typically reduces file size by 80-90%.
 
