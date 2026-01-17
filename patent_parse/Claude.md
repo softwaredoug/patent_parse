@@ -10,35 +10,58 @@ This library is designed to parse abstracts from patent PDFs, specifically those
 
 The typical workflow for improving the parser follows a test-driven approach:
 
-1. **User provides patent PDF URLs**: The user (Doug) shares URLs to patent PDFs that need to be tested.
+1. **User provides patent PDF URLs with abstracts**: The user (Doug) shares URLs to patent PDFs along with their expected abstracts.
 
-2. **Download and extract abstract**:
-   - Download the PDF to the `tests/assets/` folder (don't overwrite if it already exists)
-   - Open the PDF and extract the abstract using the current parser
-   - Review the extracted abstract to ensure it looks correct
+2. **For each PDF**:
+   - Download the PDF to `tests/assets/` (skip if it already exists)
+   - Trim to first 2 pages: `uv run python scripts/trim_pdf.py tests/assets/<patent>.pdf`
+   - Create a test case in `tests/test_parser.py` with the provided expected abstract
 
-3. **Create test case**:
-   - Create a test in `tests/test_parser.py` with the expected abstract
-   - The test should verify that the parser correctly extracts the abstract from that specific patent
+3. **Run tests** (this repo only, not the holdout):
+   - Execute `uv run pytest tests/ -v`
+   - Focus on passing tests in this repo first; holdout scoring is secondary
 
-4. **Run tests**:
-   - Execute the test suite with `uv run pytest tests/ -v`
-   - Identify any failures or issues
-
-5. **Fix parser code**:
+4. **Fix parser code**:
    - If tests fail, update the parser logic in `src/patent_parse/parser.py`
    - Address edge cases, improve pattern matching, or refine extraction logic
-   - Re-run tests until they pass
 
-6. **Iterate**:
-   - Repeat this process with additional patent PDFs to improve robustness
-   - Each new patent format may reveal new edge cases to handle
+5. **GOTO 3**: Repeat until all new patent tests pass
+
+## Holdout Workflow
+
+This workflow ensures the parser generalizes well and doesn't overfit to the test cases in this repo.
+
+**Important:** Do NOT introspect the `patent_test` project in `.venv/lib/.../site-packages/`. That defeats the purpose of the holdout.
+
+1. **Ensure all tests pass**:
+   - Run `uv run pytest tests/ -v`
+   - All tests in this repo must pass before proceeding
+
+2. **Evaluate against holdout**:
+   - Run `uv run python scripts/evaluate_holdout.py`
+   - Note the current accuracy and avg Levenshtein distance
+
+3. **Improve parser code**:
+   - Make changes to `src/patent_parse/parser.py` to improve generalization
+   - Focus on robust patterns, not test-specific fixes
+
+4. **Verify tests still pass**:
+   - Run `uv run pytest tests/ -v`
+   - If any tests fail, fix before continuing
+
+5. **Re-evaluate holdout**:
+   - Run `uv run python scripts/evaluate_holdout.py`
+   - Check if accuracy or avg Levenshtein distance improved
+
+6. **GOTO 3**: Iterate to improve holdout metrics while keeping tests green
 
 ## Key Files
 
 - `src/patent_parse/parser.py` - Core abstract extraction logic
 - `tests/test_parser.py` - Test cases for various patent PDFs
 - `tests/assets/` - Downloaded patent PDF files for testing
+- `scripts/trim_pdf.py` - Helper to trim PDFs to first 2 pages
+- `scripts/evaluate_holdout.py` - Evaluate parser against holdout set
 
 ## Running Tests
 

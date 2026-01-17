@@ -64,8 +64,10 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "pypdf", specifier = ">=6.6.0" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "pyyaml", specifier = ">=6.0.3" },
 ]
+provides-extras = ["dev"]
 
 [[package]]
 name = "pluggy"

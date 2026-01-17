@@ -2,6 +2,7 @@
   "permissions": {
     "deny": [
       "Read(../patent_test/**)",
+      "Read(.venv/lib/python3.12/site-packages/patent_test/**)"
     ]
   }
 }
