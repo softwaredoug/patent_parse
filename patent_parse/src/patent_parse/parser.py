@@ -103,6 +103,14 @@ def _is_noise_line(line: str) -> bool:
     Returns:
         True if line should be skipped
     """
+    # Classification codes like "006.01 )" or "013.01 )" - common patent format
+    if re.match(r'^\d{3}\.\d{2}\s*\)', line):
+        return True
+
+    # Lines that are mostly classification codes repeated
+    if re.match(r'^[\d\.\s\)]+$', line) and len(line) > 5:
+        return True
+
     # Classification codes like "32Of 138" or "320/109" or "B60L 50/64"
     if re.match(r'^\d+[Oo]f\s+\d+', line) or re.match(r'^\d+/\d+', line):
         return True
@@ -160,6 +168,38 @@ def _is_noise_line(line: str) -> bool:
     if line.count('?') > 2 or line.count('???') > 0:
         return True
 
+    # Patent reference numbers like "2, 712,719,908" or "280,278. 403/92"
+    if re.match(r'^\d+,\s*[\d,\s\.;/]+$', line):
+        return True
+
+    # Partial words from bad column extraction (e.g., "ion Priority Data")
+    if re.match(r'^(ion|tion|ment|ing|ent)\s+[A-Z]', line):
+        return True
+
+    # IPC/CPC codes like "GIOL 21/0205" or "B25J 9/0084"
+    if re.match(r'^[A-Z]\d+[A-Z]?\s+\d+/\d+', line):
+        return True
+
+    # Lines starting with semicolon (fragment)
+    if line.startswith(';'):
+        return True
+
+    # Lines that are just numbers with punctuation (reference numbers)
+    if re.match(r'^[\d,\s\.;/]+$', line) and len(line) > 3:
+        return True
+
+    # Lines starting with numbers followed by punctuation (like "2, 712,...")
+    if re.match(r'^\d+[,;]\s*[\d,\s]+', line) and len(line) < 50:
+        return True
+
+    # Corrupted/OCR-like text with unusual character patterns
+    if re.search(r'\d[A-Z][a-z]', line) and len(line) < 30:
+        return True
+
+    # Lines that look like search/reference metadata
+    if re.search(r'searcn|search history|complete search', line, re.IGNORECASE):
+        return True
+
     return False
 
 
@@ -201,6 +241,28 @@ def _should_resume_after_continued(line: str) -> bool:
     return False
 
 
+def _looks_like_abstract_start(line: str) -> bool:
+    """
+    Check if a line looks like the start of an abstract.
+
+    Args:
+        line: Line to check
+
+    Returns:
+        True if line looks like abstract text
+    """
+    # Abstract typically starts with "A", "An", "The", or a capitalized word
+    # followed by more text (not just a short fragment)
+    if len(line) < 20:
+        return False
+    if re.match(r'^(A|An|The|This|In|Methods?|Systems?|Devices?|Apparatus|Disclosed|Provided|Described|According|Embodiments?|Signals?)\s+\w', line):
+        return True
+    # Or starts with a capital letter and has substantial text
+    if re.match(r'^[A-Z][a-z]+\s+\w', line) and len(line) > 40:
+        return True
+    return False
+
+
 def _collect_abstract_lines(text: str) -> list[str]:
     """
     Collect abstract lines from text, filtering out noise.
@@ -214,6 +276,7 @@ def _collect_abstract_lines(text: str) -> list[str]:
     lines = text.split('\n')
     abstract_lines = []
     seen_continued = False
+    found_abstract_start = False
 
     for line in lines:
         line = line.strip()
@@ -248,6 +311,15 @@ def _collect_abstract_lines(text: str) -> list[str]:
         # Skip noise lines
         if _is_noise_line(line):
             continue
+
+        # Skip leading noise until we find what looks like the abstract start
+        if not found_abstract_start:
+            if _looks_like_abstract_start(line):
+                found_abstract_start = True
+            else:
+                # Skip short lines or lines that don't look like abstract text
+                if len(line) < 30:
+                    continue
 
         abstract_lines.append(line)
 
@@ -337,6 +409,48 @@ def _clean_abstract_text(text: str) -> str:
     text = re.sub(r'\(\s*\d{4}\.\d{2}\s*\)', '', text)  # Remove (2014.01) style codes
     text = re.sub(r'\(\s*\d+\s*\)$', '', text)  # Remove trailing numbers in parens
 
+    # Remove classification codes like "006.01 )" that may appear inline
+    text = re.sub(r'\d{3}\.\d{2}\s*\)', '', text)
+
+    # Remove "X Claims, Y Drawing Sheets" at end or inline
+    text = re.sub(r'\s*\d+\s+Claims?,\s*\d+\s+Drawing\s+Sheets?\.?\s*', '', text, flags=re.IGNORECASE)
+
+    # Remove trailing classification codes
+    text = re.sub(r'(\s+\d{3}\.\d{2}\s*\))+\s*$', '', text)
+
+    # Remove "tion Priority Data" and similar truncated fragments
+    text = re.sub(r'\s*tion Priority Data.*$', '', text, flags=re.IGNORECASE)
+
+    # Remove IPC/CPC classification references like "GIOL 21/0205" or "B25J 9/0084"
+    text = re.sub(r'\s*[A-HJ-Z]\d+[A-Z]?\s+\d+/[\d;]+', '', text)
+    text = re.sub(r'\s*[A-HJ-Z]\d+[A-Z]\s+[\d/;]+', '', text)
+
+    # Remove "Patent Application Publication" and date references
+    text = re.sub(r'\s*Patent Application Publication.*$', '', text, flags=re.IGNORECASE)
+
+    # Remove trailing numbers in common patterns like ".6." or ". 6."
+    text = re.sub(r'\s*\.\s*\d+\.\s*$', '.', text)
+
+    # Remove trailing classification-like patterns
+    text = re.sub(r'\s+\d+[,;]\s*\d+\s*$', '', text)
+
+    # Remove duplicate phrases (same phrase appearing twice in a row)
+    # This handles cases like "edge forward of the implement edge forward of the implement"
+    words = text.split()
+    if len(words) > 6:
+        # Look for repeated sequences of 3-6 words
+        for seq_len in range(6, 2, -1):
+            i = 0
+            while i < len(words) - seq_len * 2 + 1:
+                seq = ' '.join(words[i:i+seq_len])
+                next_seq = ' '.join(words[i+seq_len:i+seq_len*2])
+                if seq == next_seq:
+                    # Remove the duplicate
+                    words = words[:i+seq_len] + words[i+seq_len*2:]
+                else:
+                    i += 1
+        text = ' '.join(words)
+
     # Clean up multiple spaces
     text = re.sub(r'\s+', ' ', text).strip()
 
@@ -345,6 +459,9 @@ def _clean_abstract_text(text: str) -> str:
 
     # Fix spaces around hyphens (e.g., "bi - stable" -> "bi-stable")
     text = re.sub(r'(\w)\s+-\s+(\w)', r'\1-\2', text)
+
+    # Fix missing space after period followed by uppercase (new sentence)
+    text = re.sub(r'\.([A-Z])', r'. \1', text)
 
     return text
 
