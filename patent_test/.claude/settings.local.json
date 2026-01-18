@@ -6,7 +6,9 @@
       "Bash(python3:*)",
       "Bash(source .venv/bin/activate)",
       "Bash(python:*)",
-      "Bash(pdftotext:*)"
+      "Bash(pdftotext:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

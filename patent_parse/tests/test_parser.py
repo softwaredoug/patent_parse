@@ -174,6 +174,132 @@ PATENT_TEST_CASES = [
             "and product technology comparison and feature planning."
         ),
     },
+    {
+        "patent_id": "US20090043621A1",
+        "pdf_path": "tests/assets/US20090043621A1.pdf",
+        "expected_abstract": (
+            "The invention is an application for teams of information workers, their managers, "
+            "and human resources professionals to evaluate and raise performance based on "
+            "communication metrics and norms of behavior within a team. A model and management "
+            "Web pages enable users to collectively set norms of behavior, communicate, make "
+            "decisions, set roles and goals, receive evaluations according to their norms, and "
+            "in other ways conduct interpersonal relations in a business context. Modules "
+            "acquiring data from email and document management systems, groupware, directories, "
+            "and other information sources are included. Said information is joined with the "
+            "invention's internally generated data. An expert system generates observations and "
+            "advice permitting the team to more appropriately deploy information, adhere more "
+            "closely to its norms, and lessen stress caused by interpersonal friction. Management "
+            "is provided a means of assessing teams, setting policies, and defining parametric "
+            "ranges for norms."
+        ),
+    },
+    {
+        "patent_id": "US9545412",
+        "pdf_path": "tests/assets/US9545412.pdf",
+        "expected_abstract": (
+            "This invention relates to a composition comprising an anti-HIV treatment and a "
+            "treatment for side effects of said anti-HIV treatment in an HIV-infected patient. "
+            "This invention is, for example, very useful in the treatment of side effects caused "
+            "by certain anti-HIV treatments, for example premature aging and lipodystrophy, which "
+            "can be caused by protease inhibitors or reverse transcriptase inhibitors. The "
+            "composition of this invention includes at least one hydroxymethylglutaryl-coenzyme A "
+            "(HMG-CoA) reductase inhibitor, at least one farnesyl-pyrophosphate synthase inhibitor, "
+            "and at least one anti-HIV agent. One of the processes for treating an HIV-infected "
+            "patient includes, in any order, the following steps: (i) administration of a mixture "
+            "including at least one hydroxymethylglutaryl-coenzyme A (HMG-CoA) reductase inhibitor "
+            "and at least one farnesyl-pyrophosphate synthase inhibitor and (ii) administration of "
+            "an anti-HIV agent, in which the administrations are concomitant, successive or alternative."
+        ),
+    },
+    {
+        "patent_id": "US8432257",
+        "pdf_path": "tests/assets/US8432257.pdf",
+        "expected_abstract": (
+            "Techniques are disclosed for writing data directly onto a product to record each "
+            "ownership transfer. As a result, the product itself now carries a traceable, auditable, "
+            "non-forgeable, non-repudiable proof of ownership (and, optionally, ownership history) "
+            "that can be used in a variety of ways. This recorded ownership transfer information "
+            "provides an electronic receipt, which may be used by the present owner to prove his or "
+            "her ownership. (Optionally, other types of transfers may be recorded in addition to, or "
+            "instead of, ownership transfers.) A transfer agent or registrar may create a unique "
+            "transaction identifier to represent the transfer, and preferably creates a cryptographic "
+            "signature over fields representing the transfer. This information may be recorded in a "
+            "repository that is external from the product."
+        ),
+    },
+    {
+        "patent_id": "US12110498",
+        "pdf_path": "tests/assets/US12110498.pdf",
+        "image_based": True,  # Scanned PDF, no text layer - requires OCR
+        "expected_abstract": (
+            "Provided herein are compositions and methods of integrating one or more exogenous donor "
+            "nucleic acids into one or more exogenous landing pads engineered into a host cell's "
+            "genome. In certain embodiments, the exogenous landing pads and exogenous donor nucleic "
+            "acids comprise standardized, compatible homology regions so that exogenous donor nucleic "
+            "acids can integrate into any of the landing pads, independent of the genomic sequences "
+            "surrounding the landing pads. In certain embodiments, the methods comprise contacting "
+            "the host cell comprising landing pads with one or more exogenous donor nucleic acids, "
+            "and a nuclease capable of causing a double-strand break within the landing pads, and "
+            "recovering a host cell comprising one or more exogenous donor nucleic acids integrated "
+            "in any of the landing pads."
+        ),
+    },
+    {
+        "patent_id": "US9753649",
+        "pdf_path": "tests/assets/US9753649.pdf",
+        "expected_abstract": (
+            "Systems, methods and/or devices are used to enable tracking intermix of writes and "
+            "un-map commands across power cycles. In one aspect, the method includes (1) receiving, "
+            "at a storage device, a plurality of commands from a host, the storage device including "
+            "non-volatile memory, (2) maintaining a log corresponding to write commands and un-map "
+            "commands from the host, (3) maintaining a mapping table in volatile memory, the mapping "
+            "table used to translate logical addresses to physical addresses, (4) saving the mapping "
+            "table, on a scheduled basis that is independent of the un-map commands, to the "
+            "non-volatile memory of the storage device, (5) saving the log to the non-volatile "
+            "memory, and (6) upon power up of the storage device, rebuilding the mapping table from "
+            "the saved mapping table in the non-volatile memory of the storage device and from the "
+            "saved log in the non-volatile memory of the storage device."
+        ),
+    },
+    {
+        "patent_id": "US9795977",
+        "pdf_path": "tests/assets/US9795977.pdf",
+        "expected_abstract": (
+            "An electrically-actuated variable pressure control system for use with flow-controlled "
+            "liquid application systems. Direct acting solenoid valves are pulsed at varying "
+            "frequencies and duty cycles to change the resistance to flow encountered by the "
+            "flow-controlled liquid application system. This pulsing solenoid valve technique "
+            "preserves a high degree of accuracy and uniformity through a wide range of pressure "
+            "control. This wide range of pressure control indirectly allows the flow-controlled "
+            "liquid application system to operate over a wider range of flow control, yielding "
+            "indirect benefits to performance and productivity. When the solenoid valves are "
+            "attached to pressure-atomization spray nozzles, control over spray pattern and droplet "
+            "size is further achieved."
+        ),
+    },
+    {
+        "patent_id": "US11151203",
+        "pdf_path": "tests/assets/US11151203.pdf",
+        "expected_abstract": (
+            "Techniques for generating interest embedding vectors are disclosed. In some "
+            "embodiments, a system/process/computer program product for generating interest "
+            "embedding vectors includes aggregating a plurality of web documents associated with "
+            "one or more entities, wherein the web documents are retrieved from a plurality of "
+            "online content sources including one or more websites; selecting a plurality of tokens "
+            "based on processing of the plurality of web documents; and generating embeddings of "
+            "the selected tokens in an embedding space."
+        ),
+    },
+    {
+        "patent_id": "US11477246",
+        "pdf_path": "tests/assets/US11477246.pdf",
+        "expected_abstract": (
+            "A technique involves modular storage of network service plan components and "
+            "provisioning of same. A subset of the capabilities of a service design system can be "
+            "granted to a sandbox system to enable customization of service plan offerings or "
+            "other controls."
+        ),
+    },
 ]
 
 

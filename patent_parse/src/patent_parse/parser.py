@@ -58,10 +58,10 @@ def _find_abstract_section(text: str) -> str | None:
         Text after ABSTRACT heading, or None if not found
     """
     abstract_match = re.search(r'\bABSTRACT\b', text, re.IGNORECASE)
-    if not abstract_match:
-        return None
+    if abstract_match:
+        return text[abstract_match.end():]
 
-    return text[abstract_match.end():]
+    return None
 
 
 def _should_stop_collecting(line: str) -> bool:
@@ -81,13 +81,31 @@ def _should_stop_collecting(line: str) -> bool:
         return True
     if re.match(r'^References Cited', line, re.IGNORECASE):
         return True
-
-    # Patent classification codes like (51), (52)
-    if re.match(r'^\(\s*\d+\s*\)', line):
+    if re.match(r'^(DESCRIPTION|SUMMARY|DRAWINGS?|FIGURES?|CLAIMS?)\s*$', line, re.IGNORECASE):
         return True
+    if re.match(r'^(CROSS-REFERENCE|RELATED APPLICATION)', line, re.IGNORECASE):
+        return True
+
+    # Patent classification codes like (51), (52) - but not (57) which is the abstract section
+    if re.match(r'^\(\s*\d+\s*\)', line):
+        # (57) is the abstract section marker, don't stop on it
+        if not re.match(r'^\(\s*57\s*\)', line):
+            return True
 
     # "X Claims, Y Drawing Sheets" marker
     if re.search(r'\d+\s+Claims?\s*,\s*\d+\s+Drawing\s+Sheets?', line, re.IGNORECASE):
+        return True
+
+    # "X Claims" alone at end of line
+    if re.match(r'^\d+\s+Claims?\s*$', line, re.IGNORECASE):
+        return True
+
+    # Drawing sheet references
+    if re.search(r'\d+\s+Drawing\s+Sheets?', line, re.IGNORECASE):
+        return True
+
+    # FIG. references (diagram labels)
+    if re.match(r'^FIG\.?\s*\d', line, re.IGNORECASE):
         return True
 
     return False
@@ -200,6 +218,18 @@ def _is_noise_line(line: str) -> bool:
     if re.search(r'searcn|search history|complete search', line, re.IGNORECASE):
         return True
 
+    # Lines that look like figure/diagram references
+    if re.match(r'^(Sheet|Page)\s+\d+\s+of\s+\d+', line, re.IGNORECASE):
+        return True
+
+    # Patent document metadata lines
+    if re.match(r'^(US|EP|WO|CN|JP|KR)\s*\d', line):
+        return True
+
+    # Lines starting with "Int. Cl." or "U.S. Cl." (classification)
+    if re.match(r'^(Int\.|U\.S\.)\s*Cl\.', line, re.IGNORECASE):
+        return True
+
     return False
 
 
@@ -255,11 +285,15 @@ def _looks_like_abstract_start(line: str) -> bool:
     # followed by more text (not just a short fragment)
     if len(line) < 20:
         return False
-    if re.match(r'^(A|An|The|This|In|Methods?|Systems?|Devices?|Apparatus|Disclosed|Provided|Described|According|Embodiments?|Signals?)\s+\w', line):
+
+    # Common abstract starting patterns
+    if re.match(r'^(A|An|The|This|In)\s+\w', line):
         return True
+
     # Or starts with a capital letter and has substantial text
-    if re.match(r'^[A-Z][a-z]+\s+\w', line) and len(line) > 40:
+    if re.match(r'^[A-Z][a-z]+\s+\w', line) and len(line) > 30:
         return True
+
     return False
 
 
@@ -434,23 +468,6 @@ def _clean_abstract_text(text: str) -> str:
     # Remove trailing classification-like patterns
     text = re.sub(r'\s+\d+[,;]\s*\d+\s*$', '', text)
 
-    # Remove duplicate phrases (same phrase appearing twice in a row)
-    # This handles cases like "edge forward of the implement edge forward of the implement"
-    words = text.split()
-    if len(words) > 6:
-        # Look for repeated sequences of 3-6 words
-        for seq_len in range(6, 2, -1):
-            i = 0
-            while i < len(words) - seq_len * 2 + 1:
-                seq = ' '.join(words[i:i+seq_len])
-                next_seq = ' '.join(words[i+seq_len:i+seq_len*2])
-                if seq == next_seq:
-                    # Remove the duplicate
-                    words = words[:i+seq_len] + words[i+seq_len*2:]
-                else:
-                    i += 1
-        text = ' '.join(words)
-
     # Clean up multiple spaces
     text = re.sub(r'\s+', ' ', text).strip()
 
@@ -462,6 +479,39 @@ def _clean_abstract_text(text: str) -> str:
 
     # Fix missing space after period followed by uppercase (new sentence)
     text = re.sub(r'\.([A-Z])', r'. \1', text)
+
+    # Normalize spacing around slashes (keep single space on each side or no spaces)
+    # "and / or" -> "and/or", "and/ or" -> "and/or"
+    text = re.sub(r'\s*/\s*', '/', text)
+    # But for words like "and/or", keep it compact
+    text = re.sub(r'(\w)/(\w)', r'\1/\2', text)
+
+    # Remove trailing garbage (strings of uppercase with no spaces that look like OCR errors)
+    text = re.sub(r'\s+[A-Z]{10,}$', '', text)
+
+    # Remove any remaining trailing classification-like patterns
+    text = re.sub(r'\s+\d+[,\s]+\d+[,\s/\d]*$', '', text)
+
+    # Remove trailing numbers with periods like ". 6." or ". 3."
+    text = re.sub(r'\s*\.\s*\d+\s*\.?\s*$', '.', text)
+
+    # Remove trailing "X Claims, Y Drawing Sheets" patterns that slipped through
+    text = re.sub(r'\s*\d+\s+Claims?,?\s*\d*\s*Drawing\s+Sheets?\.?\s*$', '', text, flags=re.IGNORECASE)
+
+    # Remove stray leading numbers/punctuation that might be noise (e.g., "1 );;" at start)
+    text = re.sub(r'^[\d\s;:\)\(]+(?=[A-Z])', '', text)
+
+    # Remove leading whitespace and newlines
+    text = text.lstrip()
+
+    # Remove trailing whitespace
+    text = text.rstrip()
+
+    # Remove trailing ellipsis patterns (indicates truncation)
+    text = re.sub(r'\s*\.{3,}\s*$', '', text)
+
+    # Final cleanup of multiple spaces
+    text = re.sub(r'\s+', ' ', text).strip()
 
     return text
 
