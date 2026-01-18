@@ -27,6 +27,13 @@ The typical workflow for improving the parser follows a test-driven approach:
 
 5. **GOTO 3**: Repeat until all new patent tests pass
 
+6. **Verify holdout did not degrade** (guards against overfitting):
+   - Run `uv pip install --reinstall /Users/doug/ws/patent_parse/patent_test`
+   - Run `uv run python scripts/evaluate_holdout.py`
+   - If accuracy decreased, the fix may be overfitting to the test cases
+   - If edit distance (Levenshtein) increased, this also points to overfitting
+   - Rework the fix to be more general if holdout degraded
+
 ## Holdout Workflow
 
 This workflow ensures the parser generalizes well and doesn't overfit to the test cases in this repo.
@@ -37,23 +44,28 @@ This workflow ensures the parser generalizes well and doesn't overfit to the tes
    - Run `uv run pytest tests/ -v`
    - All tests in this repo must pass before proceeding
 
-2. **Evaluate against holdout**:
+2. **Reinstall patent_test** (new tests may be added periodically):
+   - Run `uv pip install --reinstall /Users/doug/ws/patent_parse/patent_test`
+
+3. **Evaluate against holdout**:
    - Run `uv run python scripts/evaluate_holdout.py`
    - Note the current accuracy and avg Levenshtein distance
+   - Accuracy ranges from 0-1, higher is better
+   - Edit distance (Levenshtein) ranges from 0-1, lower is better
 
-3. **Improve parser code**:
+4. **Improve parser code**:
    - Make changes to `src/patent_parse/parser.py` to improve generalization
    - Focus on robust patterns, not test-specific fixes
 
-4. **Verify tests still pass**:
+5. **Verify tests still pass**:
    - Run `uv run pytest tests/ -v`
    - If any tests fail, fix before continuing
 
-5. **Re-evaluate holdout**:
+6. **Re-evaluate holdout**:
    - Run `uv run python scripts/evaluate_holdout.py`
    - Check if accuracy or avg Levenshtein distance improved
 
-6. **GOTO 3**: Iterate to improve holdout metrics while keeping tests green
+7. **GOTO 4**: Iterate to improve holdout metrics while keeping tests green
 
 ## Key Files
 
